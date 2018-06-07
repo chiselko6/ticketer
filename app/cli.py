@@ -1,4 +1,5 @@
 import argparse
+from crawler.crawler.spiders.schedule import ScheduleSpider
 
 
 def create_parser():

@@ -10,7 +10,7 @@ setup(name='Ticketer',
       packages=find_packages(),
       entry_points={
         'console_scripts': [
-            'ticketer=app.cli.cli:start',
+            'ticketer=app.cli:start',
         ]
     }
 )
