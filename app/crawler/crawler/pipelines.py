@@ -20,7 +20,7 @@ class JsonCrawlerPipeline(object):
     def process_item(self, item, spider):
         processed_item = dict(item)
         if isinstance(item, TrainInfo):
-            processed_item['places'] = map(dict, item['places'])
+            processed_item['seats'] = map(dict, item['seats'])
         line = json.dumps(processed_item) + '\n'
         self.file.write(line)
         return processed_item

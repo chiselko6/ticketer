@@ -69,22 +69,31 @@ class MockedSpiderMiddleware(object):
 class TrainScheduleSpiderMiddleware(object):
 
     def process_spider_output(self, response, result, spider):
-        min_places = int(spider.settings['MIN_PLACES'])
+        min_seats = int(spider.settings['MIN_SEATS'])
         train_num = spider.settings['TRAIN_NUM']
-        place_type = spider.settings['PLACE_TYPE']
+        seat_type = spider.settings['SEAT_TYPE']
         found = False
 
+        def eligible_train(train):
+            return train_num is None or train_num == train['id']
+
+        def eligible_seat(seat):
+            return seat_type is None or seat['type'] == seat_type
+
+        def eligible_seats(seats):
+            return filter(eligible_seat, seats)
+
+        def available_seat(seat):
+            remaining = seat['remaining']
+            if remaining is None:
+                return False
+            return int(remaining) >= min_seats
+
         for train in result:
-            if train_num is None or train_num == train['id']:
-                places = train['places']
-                if place_type:
-                    places = filter(lambda pl: pl.type == place_type, train['places'])
-                for place in places:
-
-                    def is_available(place):
-                        return True
-
-                    if is_available(place):
+            if eligible_train(train):
+                seats = eligible_seats(train['seats'])
+                for seat in seats:
+                    if available_seat(seat):
                         found = True
                         print '~~~~~~~~~~~~~~~~~~~~AVAILABLE~~~~~~~~~~~~~~~~~~~~'
                         print unicode(train)

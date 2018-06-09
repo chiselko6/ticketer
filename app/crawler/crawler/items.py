@@ -8,7 +8,7 @@
 import scrapy
 
 
-class TrainPlace(scrapy.Item):
+class TrainSeat(scrapy.Item):
     type = scrapy.Field()
     price = scrapy.Field()
     remaining = scrapy.Field()
@@ -23,10 +23,10 @@ class TrainInfo(scrapy.Item):
     expedites = scrapy.Field()
     arrives = scrapy.Field()
     duration = scrapy.Field()
-    places = scrapy.Field()
+    seats = scrapy.Field()
 
     def __str__(self):
         return u'Train #{} {}: {}-{}({})\nAvailable: {}'.format(
             self['id'], self['direction'], self['expedites'], self['arrives'],
             self['duration'],
-            ','.join(map(lambda pl: '({})'.format(pl), self['places'])))
+            ','.join(map(lambda s: u'({})'.format(s), self['seats'])))

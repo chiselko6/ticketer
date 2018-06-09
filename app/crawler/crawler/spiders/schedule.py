@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from crawler.items import TrainInfo, TrainPlace
+from crawler.items import TrainInfo, TrainSeat
 
 
 class ScheduleSpider(scrapy.Spider):
     name = 'schedule'
 
     custom_settings = {
-        'MIN_PLACES': 1,
+        'MIN_SEATS': 1,
         'TRAIN_NUM': None,
-        'PLACE_TYPE': None,
+        'SEAT_TYPE': None,
     }
 
     def start_requests(self):
@@ -24,13 +24,13 @@ class ScheduleSpider(scrapy.Spider):
 
         def map_schedule_row(row):
 
-            def map_place_info(info):
+            def map_seat_info(info):
                 fields = {
                     'type': info.css('li.train_note::text').extract_first(),
                     'price': info.css('li.train_price::text').extract_first(),
                     'remaining': info.css('li.train_place a.train_seats::text').extract_first(),
                 }
-                return TrainPlace(**fields)
+                return TrainSeat(**fields)
 
             fields = {
                 'id': row.css('td.train_info small.train_id::text').extract_first(),
@@ -38,7 +38,7 @@ class ScheduleSpider(scrapy.Spider):
                 'expedites': row.css('td.train_start .train_start-time::text').extract_first(),
                 'arrives': row.css('td.train_end .train_end-time::text').extract_first(),
                 'duration': row.css('td.train_time .train_time-total::text').extract_first(),
-                'places': map(map_place_info, row.css('td.train_details ul.train_details-group')),
+                'seats': map(map_seat_info, row.css('td.train_details ul.train_details-group')),
             }
             return TrainInfo(**fields)
 
