@@ -66,6 +66,31 @@ class MockedSpiderMiddleware(object):
             yield i
 
 
+class TrainScheduleSpiderMiddleware(object):
+
+    def process_spider_output(self, response, result, spider):
+        min_places = int(spider.settings['MIN_PLACES'])
+        train_num = spider.settings['TRAIN_NUM']
+        place_type = spider.settings['PLACE_TYPE']
+        found = False
+
+        for train in result:
+            if train_num is None or train_num == train['id']:
+                places = train['places']
+                if place_type:
+                    places = filter(lambda pl: pl.type == place_type, train['places'])
+                for place in places:
+
+                    def is_available(place):
+                        return True
+
+                    if is_available(place):
+                        found = True
+                        print '~~~~~~~~~~~~~~~~~~~~AVAILABLE~~~~~~~~~~~~~~~~~~~~'
+                        print unicode(train)
+            yield train
+
+
 class MockedDownloaderMiddleware(object):
 
     def process_request(self, request, spider):

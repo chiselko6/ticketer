@@ -51,6 +51,7 @@ SPIDER_MIDDLEWARES = {
    # use this middleware to save response
    # 'crawler.middlewares.MockedSpiderMiddleware': 100,
    # 'crawler.middlewares.CrawlerSpiderMiddleware': 543,
+   'crawler.middlewares.TrainScheduleSpiderMiddleware': 200,
 }
 
 # Enable or disable downloader middlewares

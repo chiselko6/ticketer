@@ -6,6 +6,12 @@ from crawler.items import TrainInfo, TrainPlace
 class ScheduleSpider(scrapy.Spider):
     name = 'schedule'
 
+    custom_settings = {
+        'MIN_PLACES': 1,
+        'TRAIN_NUM': None,
+        'PLACE_TYPE': None,
+    }
+
     def start_requests(self):
         urls = [
             'https://rasp.rw.by/ru/route/?from={}&to={}&date={}&from_exp=&from_esr=&to_exp=&to_esr='.format(self.src, self.dest, self.date),
@@ -29,8 +35,8 @@ class ScheduleSpider(scrapy.Spider):
             fields = {
                 'id': row.css('td.train_info small.train_id::text').extract_first(),
                 'direction': row.css('td.train_info .train_name a.train_text::text').extract_first(),
-                'start': row.css('td.train_start .train_start-time::text').extract_first(),
-                'end': row.css('td.train_end .train_end-time::text').extract_first(),
+                'expedites': row.css('td.train_start .train_start-time::text').extract_first(),
+                'arrives': row.css('td.train_end .train_end-time::text').extract_first(),
                 'duration': row.css('td.train_time .train_time-total::text').extract_first(),
                 'places': map(map_place_info, row.css('td.train_details ul.train_details-group')),
             }
