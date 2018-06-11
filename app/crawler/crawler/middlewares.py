@@ -72,7 +72,6 @@ class TrainScheduleSpiderMiddleware(object):
         min_seats = int(spider.settings['MIN_SEATS'])
         train_num = spider.settings['TRAIN_NUM']
         seat_type = spider.settings['SEAT_TYPE']
-        found = False
 
         def eligible_train(train):
             return train_num is None or train_num == train['id']
@@ -89,15 +88,19 @@ class TrainScheduleSpiderMiddleware(object):
                 return False
             return int(remaining) >= min_seats
 
+        found_any = False
         for train in result:
+            found = False
             if eligible_train(train):
                 seats = eligible_seats(train['seats'])
                 for seat in seats:
                     if available_seat(seat):
                         found = True
-                        print '~~~~~~~~~~~~~~~~~~~~AVAILABLE~~~~~~~~~~~~~~~~~~~~'
-                        print unicode(train)
-            yield train
+            found_any = found_any or found
+            if found:
+                yield train
+        if not found_any:
+            yield response.request
 
 
 class MockedDownloaderMiddleware(object):

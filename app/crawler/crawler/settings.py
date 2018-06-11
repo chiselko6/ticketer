@@ -74,6 +74,7 @@ DOWNLOADER_MIDDLEWARES = {
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'crawler.pipelines.JsonCrawlerPipeline': 300,
+   'crawler.pipelines.TrainFoundPipeline': 100,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

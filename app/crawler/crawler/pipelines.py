@@ -24,3 +24,11 @@ class JsonCrawlerPipeline(object):
         line = json.dumps(processed_item) + '\n'
         self.file.write(line)
         return processed_item
+
+
+class TrainFoundPipeline(object):
+
+    def process_item(self, item, spider):
+        print '~~~~~~~~~~~~~~~~~~~~AVAILABLE~~~~~~~~~~~~~~~~~~~~'
+        print unicode(item)
+        return item
