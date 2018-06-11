@@ -39,6 +39,7 @@ class ScheduleSpider(scrapy.Spider):
                 'arrives': row.css('td.train_end .train_end-time::text').extract_first(),
                 'duration': row.css('td.train_time .train_time-total::text').extract_first(),
                 'seats': map(map_seat_info, row.css('td.train_details ul.train_details-group')),
+                'requested_type': self.settings.get('SEAT_TYPE'),
             }
             return TrainInfo(**fields)
 

@@ -29,6 +29,6 @@ class JsonCrawlerPipeline(object):
 class TrainFoundPipeline(object):
 
     def process_item(self, item, spider):
-        print '~~~~~~~~~~~~~~~~~~~~AVAILABLE~~~~~~~~~~~~~~~~~~~~'
-        print unicode(item)
+        print 'Your train was found!'
+        print repr(item)
         return item
