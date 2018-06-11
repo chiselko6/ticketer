@@ -10,11 +10,12 @@ class ScheduleSpider(scrapy.Spider):
         'MIN_SEATS': 1,
         'TRAIN_NUM': None,
         'SEAT_TYPE': None,
+        'LANG': 'ru',
     }
 
     def start_requests(self):
         urls = [
-            'https://rasp.rw.by/ru/route/?from={}&to={}&date={}&from_exp=&from_esr=&to_exp=&to_esr='.format(self.src, self.dest, self.date),
+            'https://rasp.rw.by/{}/route/?from={}&to={}&date={}&from_exp=&from_esr=&to_exp=&to_esr='.format(self.lang, self.src, self.dest, self.date),
         ]
 
         for url in urls:
