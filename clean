@@ -1,11 +1,3 @@
 #! /usr/bin/env bash
 
-if [ -f "$SETUP_RECORD" ]
-then
-  cat "$SETUP_RECORD" | xargs rm -r
-fi
-
-rm -rf build \
-       dist \
-       *.egg-info \
-       "$SETUP_RECORD_DIR"
+rm -rf "$OUTPUT_DATA_DIR"
