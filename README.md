@@ -15,7 +15,7 @@ Mac, Linux
 
 ### Spider arguments(required)
 
-- `src`: point of departure, can be in Russian (preferred) or in other language, supported by the site (in this case you should overwrite [#LANG](additional-arguments) argument)
+- `src`: point of departure, can be in Russian (preferred) or in other language, supported by the site (in this case you should overwrite [LANG](#additional-arguments) argument)
 - `dest`: destination (same rules as for `src` parameter)
 - `date`: departure time (e.g. *tomorrow*, *today*), available options can be taken from the official site
 
