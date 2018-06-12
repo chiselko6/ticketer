@@ -15,7 +15,7 @@ class ScheduleSpider(scrapy.Spider):
 
     def start_requests(self):
         urls = [
-            'https://rasp.rw.by/{}/route/?from={}&to={}&date={}&from_exp=&from_esr=&to_exp=&to_esr='.format(self.lang, self.src, self.dest, self.date),
+            'https://rasp.rw.by/{}/route/?from={}&to={}&date={}&from_exp=&from_esr=&to_exp=&to_esr='.format(self.settings['LANG'], self.src, self.dest, self.date),
         ]
 
         for url in urls:
