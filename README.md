@@ -5,11 +5,16 @@ Setting up needed configuration, one can start the process and wait until voice 
 
 ## System requirements
 
-Mac, Linux
+- OS: Mac, Linux
+- Python: 2.7+
 
 ## Preinstall
 
 - Linux: you need to install `speech-dispatcher` package for voice alarm by running `sudo apt install speech-dispatcher`
+
+Common:
+
+- `scrapy`: `pip install scrapy`
 
 ## Configuration
 
@@ -28,4 +33,5 @@ Mac, Linux
 
 Example run (assuming you are in `/ticketer`):
 
+    ./scripts/env.sh && ./clean && ./configure
     src=Гомель dest=Минск date=tomorrow SEAT_TYPE=Плацкартный MIN_SEATS=2 ./scripts/run.sh
