@@ -42,7 +42,7 @@ ROBOTSTXT_OBEY = False
 #TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
-#DEFAULT_REQUEST_HEADERS = {
+# DEFAULT_REQUEST_HEADERS = {
 #   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 #   'Accept-Language': 'en',
 #}
@@ -51,30 +51,30 @@ ROBOTSTXT_OBEY = False
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 MOCKED_DATA_PATH = 'mock_response.html'
 SPIDER_MIDDLEWARES = {
-   # use this middleware to save response
-   # 'crawler.middlewares.MockedSpiderMiddleware': 100,
-   # 'crawler.middlewares.CrawlerSpiderMiddleware': 543,
-   'crawler.middlewares.TrainScheduleSpiderMiddleware': 200,
+    # use this middleware to save response
+    # 'crawler.middlewares.MockedSpiderMiddleware': 100,
+    # 'crawler.middlewares.CrawlerSpiderMiddleware': 543,
+    'crawler.middlewares.TrainScheduleSpiderMiddleware': 200,
 }
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     # use this middleware to read mocked response
-   # 'crawler.middlewares.MockedDownloaderMiddleware': 100,
+    # 'crawler.middlewares.MockedDownloaderMiddleware': 100,
 }
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
-#EXTENSIONS = {
+# EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 #}
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'crawler.pipelines.JsonCrawlerPipeline': 300,
-   'crawler.pipelines.TrainFoundPipeline': 100,
+    'crawler.pipelines.JsonCrawlerPipeline': 300,
+    'crawler.pipelines.TrainFoundPipeline': 100,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

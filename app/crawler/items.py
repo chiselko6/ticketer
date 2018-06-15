@@ -14,10 +14,17 @@ class TrainSeat(scrapy.Item):
     remaining = scrapy.Field()
 
     def __repr__(self):
-        return 'Remaining: {}, price: {}'.format(self['remaining'], self['price'])
+        return 'Remaining: {}, price: {}'.format(
+            self['remaining'],
+            self['price']
+        )
 
     def __str__(self):
-        return u'{} {} {}'.format(self['type'], self['price'], self['remaining'])
+        return u'{} {} {}'.format(
+            self['type'],
+            self['price'],
+            self['remaining']
+        )
 
 
 class TrainInfo(scrapy.Item):
@@ -32,12 +39,15 @@ class TrainInfo(scrapy.Item):
     @property
     def requested_seat(self):
         if self['requested_type']:
-            return filter(lambda s: s['type'] == self['requested_type'], self['seats'])[0]
+            return filter(lambda s: s['type'] == self['requested_type'],
+                          self['seats']
+                          )[0]
         return None
 
     def __repr__(self):
         requested_seat = self.requested_seat or self['seats']
-        return u'Train #{}\nDeparture: {}\nArrival: {}\nAvailable seats: {}\n'.format(
+        return u'Train #{}\nDeparture: {}\nArrival: {}\nAvailable seats: {}\n'
+        .format(
             self['id'],
             self['expedites'],
             self['arrives'],

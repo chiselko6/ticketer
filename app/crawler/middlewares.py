@@ -110,5 +110,5 @@ class MockedDownloaderMiddleware(object):
         with open(MOCKED_DATA_PATH, 'r') as fin:
             body = fin.read()
         response = HtmlResponse(url=request.url,
-            body=body)
+                                body=body)
         return response
