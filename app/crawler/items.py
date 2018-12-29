@@ -33,7 +33,6 @@ class TransportInfo(scrapy.Item):
     def requested_seat(self):
         if self['requested_type']:
             return filter(lambda s: s['type'] == self['requested_type'], self['seats'])[0]
-        return None
 
     def __repr__(self):
         requested_seat = self.requested_seat or self['seats']
@@ -49,6 +48,9 @@ class TransportInfo(scrapy.Item):
 
     def __str__(self):
         return u'Item #{} {}: {}-{}({})\nAvailable: {}'.format(
-            self['id'], self['direction'], self['expedites'], self['arrives'],
+            self['id'],
+            self['direction'],
+            self['expedites'],
+            self['arrives'],
             self['duration'],
             ','.join(map(lambda s: u'({})'.format(s), self['seats'])))
