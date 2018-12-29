@@ -35,3 +35,11 @@ Example run (assuming you are in `/ticketer`):
 
     ./scripts/env.sh && ./clean && ./configure
     src=Гомель dest=Минск date=tomorrow SEAT_TYPE=Плацкартный MIN_SEATS=2 ./scripts/run.sh
+
+## Custom spiders
+
+If you want to crawl any other web-site, all you need to do is to parse it using new spider. You should:
+
+- Place its source code to `app/crawler/spiders/<your_spider>.py` (you can refer to existing [schedule.py](https://github.com/chiselko6/ticketer/blob/master/app/crawler/spiders/schedule.py) spider)
+- Name your spider inside its class (e.g. `name = 'bus_schedule'`)
+- Put its name to [run.sh](https://github.com/chiselko6/ticketer/blob/master/scripts/run.sh#L13) script. If your spider name is `my_spider`, you should replace existing line with: `runner_cmd="scrapy crawl my_spider"`
