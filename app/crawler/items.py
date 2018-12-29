@@ -37,13 +37,6 @@ class TransportInfo(scrapy.Item):
 
     def __repr__(self):
         requested_seat = self.requested_seat or self['seats']
-<<<<<<< Updated upstream
-        return u'Train #{}\nDeparture: {}\nArrival: {}\nAvailable seats: {}\n'.format(
-            self['id'],
-            self['expedites'],
-            self['arrives'],
-            repr(requested_seat),
-=======
         return (
             u'Item #{}\nDeparture: {}\nArrival: {}\nAvailable seats: {}\n'
             .format(
@@ -52,7 +45,6 @@ class TransportInfo(scrapy.Item):
                 self['arrives'],
                 repr(requested_seat),
             )
->>>>>>> Stashed changes
         )
 
     def __str__(self):

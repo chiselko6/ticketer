@@ -15,7 +15,13 @@ class RWScheduleSpider(scrapy.Spider):
 
     def start_requests(self):
         urls = [
-            'https://rasp.rw.by/{}/route/?from={}&to={}&date={}&from_exp=&from_esr=&to_exp=&to_esr='.format(self.settings['LANG'], self.src, self.dest, self.date),
+            'https://rasp.rw.by/{}/route/?from={}&to={}&date={}&from_exp=&'
+            'from_esr=&to_exp=&to_esr='.format(
+                self.settings['LANG'],
+                self.src,
+                self.dest,
+                self.date
+            ),
         ]
 
         for url in urls:
@@ -28,8 +34,10 @@ class RWScheduleSpider(scrapy.Spider):
             def map_seat_info(info):
                 fields = {
                     'type': info.css('li.train_note::text').extract_first(),
-                    'price': info.css('li.train_price span::text').extract_first(),
-                    'remaining': info.css('li.train_place a.train_seats::text').extract_first(),
+                    'price': info.css('li.train_price span::text')
+                    .extract_first(),
+                    'remaining': info.css('li.train_place a.train_seats::text')
+                    .extract_first(),
                 }
                 return Seat(**fields)
 
