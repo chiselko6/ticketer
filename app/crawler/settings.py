@@ -51,10 +51,17 @@ ROBOTSTXT_OBEY = False
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 MOCKED_DATA_PATH = 'mock_response.html'
 SPIDER_MIDDLEWARES = {
+<<<<<<< Updated upstream
    # use this middleware to save response
    # 'crawler.middlewares.MockedSpiderMiddleware': 100,
    # 'crawler.middlewares.CrawlerSpiderMiddleware': 543,
    'crawler.middlewares.TrainScheduleSpiderMiddleware': 200,
+=======
+    # use this middleware to save response
+    # 'crawler.middlewares.MockedSpiderMiddleware': 100,
+    # 'crawler.middlewares.CrawlerSpiderMiddleware': 543,
+    'crawler.middlewares.TransportScheduleSpiderMiddleware': 200,
+>>>>>>> Stashed changes
 }
 
 # Enable or disable downloader middlewares
@@ -73,8 +80,13 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
+<<<<<<< Updated upstream
    'crawler.pipelines.JsonCrawlerPipeline': 300,
    'crawler.pipelines.TrainFoundPipeline': 100,
+=======
+    'crawler.pipelines.JsonCrawlerPipeline': 300,
+    'crawler.pipelines.TransportFoundPipeline': 100,
+>>>>>>> Stashed changes
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

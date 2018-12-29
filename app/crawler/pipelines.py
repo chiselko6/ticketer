@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import copy
-from items import TrainInfo
+from items import TransportInfo
 
 # Define your item pipelines here
 #
@@ -19,14 +19,14 @@ class JsonCrawlerPipeline(object):
 
     def process_item(self, item, spider):
         processed_item = dict(item)
-        if isinstance(item, TrainInfo):
+        if isinstance(item, TransportInfo):
             processed_item['seats'] = map(dict, item['seats'])
         line = json.dumps(processed_item) + '\n'
         self.file.write(line)
         return processed_item
 
 
-class TrainFoundPipeline(object):
+class TransportFoundPipeline(object):
 
     def process_item(self, item, spider):
         print 'Your train was found!'

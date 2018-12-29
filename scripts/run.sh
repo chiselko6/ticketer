@@ -10,7 +10,7 @@ fi
 
 function run_app() {
   pushd app 1>/dev/null
-  runner_cmd="scrapy crawl schedule"
+  runner_cmd="scrapy crawl rw_schedule"
 
   attrs=("date" "src" "dest")
   attr_values=("$date" "$src" "$dest")
@@ -22,8 +22,8 @@ function run_app() {
     fi
   done
 
-  settings=("MIN_SEATS" "TRAIN_NUM" "SEAT_TYPE" "LANG")
-  settings_values=("$MIN_SEATS" "$TRAIN_NUM" "$SEAT_TYPE" "$LANG")
+  settings=("MIN_SEATS" "NUM" "SEAT_TYPE" "LANG")
+  settings_values=("$MIN_SEATS" "$NUM" "$SEAT_TYPE" "$LANG")
   for ((i = 0; i < "${#settings[@]}"; i++))
   do
     if [ ! -z "${settings_values[$i]}" ]

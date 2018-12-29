@@ -8,7 +8,7 @@
 import scrapy
 
 
-class TrainSeat(scrapy.Item):
+class Seat(scrapy.Item):
     type = scrapy.Field()
     price = scrapy.Field()
     remaining = scrapy.Field()
@@ -20,7 +20,7 @@ class TrainSeat(scrapy.Item):
         return u'{} {} {}'.format(self['type'], self['price'], self['remaining'])
 
 
-class TrainInfo(scrapy.Item):
+class TransportInfo(scrapy.Item):
     id = scrapy.Field()
     direction = scrapy.Field()
     expedites = scrapy.Field()
@@ -37,15 +37,26 @@ class TrainInfo(scrapy.Item):
 
     def __repr__(self):
         requested_seat = self.requested_seat or self['seats']
+<<<<<<< Updated upstream
         return u'Train #{}\nDeparture: {}\nArrival: {}\nAvailable seats: {}\n'.format(
             self['id'],
             self['expedites'],
             self['arrives'],
             repr(requested_seat),
+=======
+        return (
+            u'Item #{}\nDeparture: {}\nArrival: {}\nAvailable seats: {}\n'
+            .format(
+                self['id'],
+                self['expedites'],
+                self['arrives'],
+                repr(requested_seat),
+            )
+>>>>>>> Stashed changes
         )
 
     def __str__(self):
-        return u'Train #{} {}: {}-{}({})\nAvailable: {}'.format(
+        return u'Item #{} {}: {}-{}({})\nAvailable: {}'.format(
             self['id'], self['direction'], self['expedites'], self['arrives'],
             self['duration'],
             ','.join(map(lambda s: u'({})'.format(s), self['seats'])))

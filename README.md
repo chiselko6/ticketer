@@ -27,7 +27,7 @@ Common:
 ### Additional arguments
 
 - `MIN_SEATS`(defaults to 1): minimum required # seats for the found train/trains
-- `TRAIN_NUM`: if you need to specify train number you want to find available seats for, you should place it here. Without specifying this argument all trains from the schedule are compared to other params
+- `NUM`: if you need to specify train number you want to find available seats for, you should place it here. Without specifying this argument all trains from the schedule are compared to other params
 - `SEAT_TYPE`: if you want a specific type of seat (e.g. *Плацкартный*). This option value should be used the same as used in the official site
 - `LANG`(defaults to `ru`): if you want to input information in other languages (e.g. `en`), use this argument
 
