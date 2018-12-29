@@ -66,21 +66,21 @@ class MockedSpiderMiddleware(object):
             yield i
 
 
-class TrainScheduleSpiderMiddleware(object):
+class TransportScheduleSpiderMiddleware(object):
 
     def process_spider_output(self, response, result, spider):
         min_seats = int(spider.settings['MIN_SEATS'])
-        train_num = spider.settings['TRAIN_NUM']
+        transport_num = spider.settings['NUM']
         seat_type = spider.settings['SEAT_TYPE']
 
-        def eligible_train(train):
-            return train_num is None or train_num == train['id']
+        def is_requested_num(transport):
+            return transport_num is None or transport_num == transport['id']
 
-        def eligible_seat(seat):
+        def is_requested_seat(seat):
             return seat_type is None or seat['type'] == seat_type
 
-        def eligible_seats(seats):
-            return filter(eligible_seat, seats)
+        def is_requested_seats(seats):
+            return filter(is_requested_seat, seats)
 
         def available_seat(seat):
             remaining = seat['remaining']
@@ -89,16 +89,16 @@ class TrainScheduleSpiderMiddleware(object):
             return int(remaining) >= min_seats
 
         found_any = False
-        for train in result:
+        for transport in result:
             found = False
-            if eligible_train(train):
-                seats = eligible_seats(train['seats'])
+            if is_requested_num(transport):
+                seats = is_requested_seats(transport['seats'])
                 for seat in seats:
                     if available_seat(seat):
                         found = True
             found_any = found_any or found
             if found:
-                yield train
+                yield transport
         if not found_any:
             yield response.request
 
