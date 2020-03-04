@@ -1,6 +1,8 @@
 #!/bin/bash
 
-MYOS=`uname`
+RUN_CMD="scrapy crawl $1"
+
+MYOS=$(uname)
 if [ "$MYOS" == "Darwin" ]
 then
   SPEAK_COMMAND="say"
@@ -9,16 +11,15 @@ else
 fi
 
 function run_app() {
-  pushd app 1>/dev/null
-  runner_cmd="scrapy crawl rw_schedule"
+  pushd ticketer 1>/dev/null
 
   attrs=("date" "src" "dest")
   attr_values=("$date" "$src" "$dest")
   for ((i = 0; i < "${#attrs[@]}"; i++))
   do
-    if [ ! -z "${attr_values[$i]}" ]
+    if [ -n "${attr_values[$i]}" ]
     then
-      runner_cmd+=" -a ${attrs[$i]}=${attr_values[$i]}"
+      RUN_CMD+=" -a ${attrs[$i]}=${attr_values[$i]}"
     fi
   done
 
@@ -26,13 +27,14 @@ function run_app() {
   settings_values=("$MIN_SEATS" "$NUM" "$SEAT_TYPE" "$LANG")
   for ((i = 0; i < "${#settings[@]}"; i++))
   do
-    if [ ! -z "${settings_values[$i]}" ]
+    if [ -n "${settings_values[$i]}" ]
     then
-      runner_cmd+=" -s ${settings[$i]}=${settings_values[$i]}"
+      RUN_CMD+=" -s ${settings[$i]}=${settings_values[$i]}"
     fi
   done
 
-  $runner_cmd > $OUTPUT_DATA && cat $OUTPUT_DATA | xargs $SPEAK_COMMAND
+  $RUN_CMD > "$OUTPUT_DATA" && cat "$OUTPUT_DATA" | xargs $SPEAK_COMMAND
+
   popd 1>/dev/null
 }
 
