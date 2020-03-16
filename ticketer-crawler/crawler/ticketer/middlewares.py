@@ -5,9 +5,10 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-from typing import Iterable
+from typing import Iterable, Optional
 
 from scrapy import signals
+import requests
 
 from .items import TransportInfo, SeatInfo
 from .settings import MOCKED_DATA_PATH
@@ -119,16 +120,27 @@ class MockedSpiderMiddleware(object):
 
 class TransportScheduleSpiderMiddleware(object):
 
+    def __init__(self, min_seats: int = 1, num: Optional[str] = None, seat_type: Optional[str] = None) -> None:
+        self.min_seats = min_seats
+        self.num = num
+        self.seat_type = seat_type
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        min_seats = crawler.settings['MIN_SEATS']
+        return cls(
+            min_seats=int(min_seats) if min_seats is not None else 1,
+            num=crawler.settings['NUM'],
+            seat_type=crawler.settings['SEAT_TYPE'],
+        )
+
     def process_spider_output(self, response, result: Iterable[TransportInfo], spider):
-        required_min_seats = int(spider.settings['MIN_SEATS'])
-        required_transport_num = spider.settings['NUM']
-        required_seat_type = spider.settings['SEAT_TYPE']
 
         def eligible_transport(transport: TransportInfo) -> bool:
-            return required_transport_num is None or required_transport_num == transport['id']
+            return self.num is None or self.num == transport['id']
 
         def eligible_seat(seat: SeatInfo) -> bool:
-            return required_seat_type is None or seat['type'] == required_seat_type
+            return self.seat_type is None or seat['type'] == self.seat_type
 
         def eligible_seats(seats: Iterable[SeatInfo]) -> Iterable[SeatInfo]:
             return filter(eligible_seat, seats)
@@ -137,7 +149,8 @@ class TransportScheduleSpiderMiddleware(object):
             remaining = seat['remaining']
             if remaining is None:
                 return False
-            return int(remaining) >= required_min_seats
+
+            return int(remaining) >= self.min_seats
 
         found_any = False
 
@@ -157,6 +170,37 @@ class TransportScheduleSpiderMiddleware(object):
 
         if not found_any:
             yield response.request
+
+
+class JobScheduleSpiderMiddleware(TransportScheduleSpiderMiddleware):
+
+    def __init__(self, retry_url: str, job_id: str, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.retry_url = retry_url
+        self.job_id = job_id
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        min_seats = crawler.settings['MIN_SEATS']
+        return cls(
+            min_seats=int(min_seats) if min_seats is not None else 1,
+            num=crawler.settings['NUM'],
+            seat_type=crawler.settings['SEAT_TYPE'],
+            retry_url=crawler.settings['RETRY_URL'],
+            job_id=crawler.settings['JOB_ID'],
+        )
+
+    def process_spider_output(self, response, result: Iterable[TransportInfo], spider):
+        was_found = False
+
+        for item in super().process_spider_output(response, result, spider):
+            if isinstance(item, TransportInfo):
+                was_found = True
+                yield item
+
+        if not was_found:
+            requests.post(self.retry_url, json={'job_id': self.job_id})
+            yield None
 
 
 class MockedDownloaderMiddleware(object):

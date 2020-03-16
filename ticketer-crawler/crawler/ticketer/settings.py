@@ -49,10 +49,11 @@ ROBOTSTXT_OBEY = False
 MOCKED_DATA_PATH = 'mock_response.html'
 SPIDER_MIDDLEWARES = {
     # use this middleware to save response
-    # 'crawler.middlewares.MockedSpiderMiddleware': 100,
+    # 'ticketer.middlewares.MockedSpiderMiddleware': 100,
 
-    # 'crawler.middlewares.CrawlerSpiderMiddleware': 543,
-    'ticketer.middlewares.TransportScheduleSpiderMiddleware': 200,
+    # 'ticketer.middlewares.CrawlerSpiderMiddleware': 543,
+    # 'ticketer.middlewares.TransportScheduleSpiderMiddleware': 200,
+    'ticketer.middlewares.JobScheduleSpiderMiddleware': 100,
 }
 
 # Enable or disable downloader middlewares
@@ -70,8 +71,9 @@ SPIDER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'ticketer.pipelines.JsonCrawlerPipeline': 50,
-    'ticketer.pipelines.SeatsFoundPipeline': 100,
+    # 'ticketer.pipelines.JsonCrawlerPipeline': 50,
+    'ticketer.pipelines.TelegramNotificationPipeline': 60,
+    # 'ticketer.pipelines.SeatsFoundPipeline': 100,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

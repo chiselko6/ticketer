@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "telegram"
+version = "0.1.0"
+description = "Telegram bot as an interface for user requests"
+authors = ["Alex Limontov <alex.limontov@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.5"
+requests = "^2.23.0"
+python-telegram-bot = "^12.4.2"
+structlog = "^20.1.0"
+calendar-telegram = {git = "https://github.com/chiselko6/calendar-telegram.git", rev = "v0.1.2"}
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

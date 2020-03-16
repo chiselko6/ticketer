@@ -2,16 +2,8 @@
 
 RUN_CMD="scrapy crawl $1"
 
-MYOS=$(uname)
-if [ "$MYOS" == "Darwin" ]
-then
-  SPEAK_COMMAND="say"
-else
-  SPEAK_COMMAND="spd-say"
-fi
-
 function run_app() {
-  pushd ticketer 1>/dev/null
+  pushd crawler 1>/dev/null
 
   attrs=("date" "src" "dest")
   attr_values=("$date" "$src" "$dest")
@@ -23,8 +15,8 @@ function run_app() {
     fi
   done
 
-  settings=("MIN_SEATS" "NUM" "SEAT_TYPE" "LANG")
-  settings_values=("$MIN_SEATS" "$NUM" "$SEAT_TYPE" "$LANG")
+  settings=("MIN_SEATS" "NUM" "SEAT_TYPE" "LANG" "TG_TOKEN" "TG_CHAT_ID" "RETRY_URL" "JOB_ID")
+  settings_values=("$MIN_SEATS" "$NUM" "$SEAT_TYPE" "$LANG" "$TG_TOKEN" "$TG_CHAT_ID" "$RETRY_URL" "$JOB_ID")
   for ((i = 0; i < "${#settings[@]}"; i++))
   do
     if [ -n "${settings_values[$i]}" ]
@@ -33,7 +25,7 @@ function run_app() {
     fi
   done
 
-  $RUN_CMD > "$OUTPUT_DATA" && cat "$OUTPUT_DATA" | xargs $SPEAK_COMMAND
+  $RUN_CMD
 
   popd 1>/dev/null
 }

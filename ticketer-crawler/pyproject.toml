@@ -1,12 +1,15 @@
 [tool.poetry]
-name = "ticketer"
+name = "ticketer-crawler"
 version = "0.1.0"
-description = "Tool to find available tickets"
+description = "Crawler for tickets from different websites"
 authors = ["Alex Limontov <alex.limontov@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.5"
-scrapy = "^1.8.0"
+scrapy = "^2.0.0"
+flask = "^1.1.1"
+requests = "^2.23.0"
+rq = "^1.3.0"
 
 [tool.poetry.dev-dependencies]
 

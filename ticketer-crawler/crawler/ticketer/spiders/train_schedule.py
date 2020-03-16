@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from typing import Iterable
 
 import scrapy
@@ -12,9 +11,6 @@ class TrainScheduleSpider(scrapy.Spider):
     name = 'train_schedule'
 
     custom_settings = {
-        'MIN_SEATS': 1,
-        'NUM': None,
-        'SEAT_TYPE': None,
         'LANG': 'ru',
     }
 

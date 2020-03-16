@@ -105,4 +105,4 @@ venv.bak/
 
 # app
 installed-data/
-output-data/
+ticketer-crawler/output-data/
